@@ -40,9 +40,17 @@ public class UserRegistrationController {
 	@PostMapping
 	public String registerUserAccount(@ModelAttribute("account") UserRegistrationDto registrationDto)
 	{
-		    Config config = configService.getConfigByCode("role", "admin");
-			accountService.save(registrationDto, config);
-			return "redirect:/registration?success";
+		    long count = accountService.countDuplicatedUsername(registrationDto.getEmail());
+		    if(count != 0)
+		    {
+		    	return "redirect:/registration?fail";
+		    }
+		    else
+		    {
+		    	Config config = configService.getConfigByCode("role", "admin");
+		    	accountService.save(registrationDto, config);
+		    	return "redirect:/registration?success";
+		    }
 	}
 
 }

@@ -16,7 +16,6 @@ import com.example.demo.dto.UserRegistrationDto;
 import com.example.demo.model.Account;
 import com.example.demo.model.Config;
 import com.example.demo.repository.AccountRepository;
-import com.example.demo.repository.ConfigRepository;
 
 @Service
 public class AccountServiceImpl  implements AccountService {
@@ -52,12 +51,14 @@ public class AccountServiceImpl  implements AccountService {
 
 	@Override
 	public Account save(UserRegistrationDto registrationDto, Config config) {
-		//Config config = configRepository.getConfigByCode("role", "admin");
-		/*Account account = new Account(registrationDto.getEmail(),
-				passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Config("role")));*/
 		Account account = new Account(registrationDto.getEmail(),
 				passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(config));
 		return accountRepository.save(account);
+	}
+
+	@Override
+	public long countDuplicatedUsername(String username) {
+		return accountRepository.countDuplicatedUsername(username);
 	}
 
 }

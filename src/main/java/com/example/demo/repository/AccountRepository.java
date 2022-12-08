@@ -16,5 +16,8 @@ public interface AccountRepository extends JpaRepository<Account, String >{
 	
 	@Query("SELECT COUNT(a) FROM Account a WHERE a.username =:username")
 	long countByusername(@Param("username") String username);
+	
+	@Query("SELECT COUNT(a) FROM Account a WHERE a.username =:username")
+	public long countDuplicatedUsername(@Param("username") String username);
 
 }
